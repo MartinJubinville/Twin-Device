@@ -1,4 +1,5 @@
 # Copyright (C) 2024 Wild Rose Technologies Inc.
+# Let's see about making changes for Git.
 
 import sys
 
