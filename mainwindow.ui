@@ -124,7 +124,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Coil Settings&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber">
+   <widget class="QLCDNumber" name="lcdNumber_CoilAFreq">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -133,11 +133,16 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Academy Engraved LET</family>
+     </font>
+    </property>
     <property name="digitCount">
      <number>10</number>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_2">
+   <widget class="QLCDNumber" name="lcdNumber_CoilBFreq">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -163,7 +168,7 @@
      <string>Temperature Coil A</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_3">
+   <widget class="QLCDNumber" name="lcdNumber_CoilATemp">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -189,7 +194,7 @@
      <string>Temperature Coil B</string>
     </property>
    </widget>
-   <widget class="QLCDNumber" name="lcdNumber_4">
+   <widget class="QLCDNumber" name="lcdNumber_CoilBTemp">
     <property name="geometry">
      <rect>
       <x>240</x>

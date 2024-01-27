@@ -5,6 +5,7 @@ from PySide6.QtWidgets import QMainWindow
 from PySide6.QtCore import QIODevice, Signal, Slot     # both of these idea came from serial demo
 # I don't know why this Slot is imported, but is it used below
 from PySide6.QtCore import QPoint               # to move window to certain point position
+from PySide6.QtGui import QPalette, QColor 
 
 from ui_mainwindow import Ui_MainWindow
 from ui_wowserSettings import Ui_SettingsDialog
@@ -24,6 +25,20 @@ class TwinDeviceMainWindow(QMainWindow):
         super(TwinDeviceMainWindow, self).__init__()
         self.ui = Ui_MainWindow()                           # write in the ui
         self.ui.setupUi(self)
+        # Let's adjust the ui to avoid problems in Designer
+        # lcdNumber_CoilAFreq lcdNumber_CoilBFreq lcdNumber_CoilATemp lcdNumber_CoilBTemp
+        self.ui.lcdNumber_CoilAFreq.display("000")
+        self.ui.lcdNumber_CoilBFreq.display("000")
+        self.ui.lcdNumber_CoilATemp.display("000 'C")
+        self.ui.lcdNumber_CoilBTemp.display("000 'F")
+        self.ui.lcdNumber_CoilAFreq.setStyleSheet("background-color: grey")
+        # NB: font color is adjusted at the font
+        self.ui.lcdNumber_CoilBFreq.setStyleSheet("background-color: grey")
+        self.ui.lcdNumber_CoilATemp.setStyleSheet("background-color: grey")
+        self.ui.lcdNumber_CoilBTemp.setStyleSheet("background-color: grey")
+        # now to set the LCD text color
+
+
 
         self.myDialogSecondWindow = DialogSecondWindow()  # Note the lack of ".ui"
         #self.wowserRequest.connect(self.wowserRequestInTheAir)
