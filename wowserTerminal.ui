@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>wowserTerminal</class>
+ <widget class="QMainWindow" name="wowserTerminal">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>684</width>
+    <height>536</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>WowSer Terminal</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="lineEdit_TerminalUserCommandLine">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>70</y>
+      <width>631</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Courier New</family>
+     </font>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_Done">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>400</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Done</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
+    <property name="default">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>50</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Terminal&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser_TerminalScreen">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>110</y>
+      <width>631</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Courier New</family>
+     </font>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>310</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Customized Commands &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>684</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuSerial">
+    <property name="title">
+     <string>Serial</string>
+    </property>
+    <addaction name="actionConnect"/>
+    <addaction name="actionDisconnect"/>
+    <addaction name="separator"/>
+    <addaction name="actionReport"/>
+    <addaction name="actionFormat"/>
+    <addaction name="separator"/>
+    <addaction name="actionWowSerConnect"/>
+    <addaction name="actionWowSerDisconnect"/>
+    <addaction name="actionWowSerSettings"/>
+    <addaction name="actionWowSerTerminalWipe"/>
+   </widget>
+   <addaction name="menuSerial"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionWowSerConnect"/>
+   <addaction name="actionWowSerDisconnect"/>
+   <addaction name="actionWowSerSettings"/>
+   <addaction name="actionWowSerTerminalWipe"/>
+  </widget>
+  <action name="actionConnect">
+   <property name="text">
+    <string>Connect</string>
+   </property>
+  </action>
+  <action name="actionDisconnect">
+   <property name="text">
+    <string>Disconnect</string>
+   </property>
+  </action>
+  <action name="actionReport">
+   <property name="text">
+    <string>Report</string>
+   </property>
+  </action>
+  <action name="actionFormat">
+   <property name="text">
+    <string>Format</string>
+   </property>
+  </action>
+  <action name="actionWowSerSettings">
+   <property name="icon">
+    <iconset>
+     <normaloff>stuffserial/settings.png</normaloff>stuffserial/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>WowSerSettings</string>
+   </property>
+   <property name="toolTip">
+    <string>Serial port settings configuration...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionWowSerConnect">
+   <property name="icon">
+    <iconset>
+     <normaloff>stuffserial/connect.png</normaloff>stuffserial/connect.png</iconset>
+   </property>
+   <property name="text">
+    <string>WowSerConnect</string>
+   </property>
+   <property name="toolTip">
+    <string>Connect with the serial port...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionWowSerDisconnect">
+   <property name="icon">
+    <iconset>
+     <normaloff>stuffserial/disconnect.png</normaloff>stuffserial/disconnect.png</iconset>
+   </property>
+   <property name="text">
+    <string>WowSerDisconnect</string>
+   </property>
+   <property name="toolTip">
+    <string>Disconnect the serial port...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionWowSerTerminalWipe">
+   <property name="icon">
+    <iconset>
+     <normaloff>stuffserial/clear.png</normaloff>stuffserial/clear.png</iconset>
+   </property>
+   <property name="text">
+    <string>WowSerTerminalWipe</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear the serial port terminal...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
