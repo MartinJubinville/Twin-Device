@@ -69,9 +69,10 @@ class TwinDeviceMainWindow(QMainWindow):
     @Slot()
     def wowserStateChanged(self):
         self.show()
+        self.activateWindow()
         #self.m_ui.label
         self.ui.labelWowSerState.setText("WowSer changed")
-        print("aksdfjasdfjdj")
+        print("WowSer stage changed.")
 
     @Slot()
     def serialDisconnectHappened(self):
