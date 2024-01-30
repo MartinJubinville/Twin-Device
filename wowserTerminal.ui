@@ -134,6 +134,7 @@
    <addaction name="actionWowSerDisconnect"/>
    <addaction name="actionWowSerSettings"/>
    <addaction name="actionWowSerTerminalWipe"/>
+   <addaction name="actionLoadPreviousSettings"/>
   </widget>
   <action name="actionConnect">
    <property name="text">
@@ -210,6 +211,21 @@
    </property>
    <property name="toolTip">
     <string>Clear the serial port terminal...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionLoadPreviousSettings">
+   <property name="icon">
+    <iconset>
+     <normaloff>stuffserial/previous.png</normaloff>stuffserial/previous.png</iconset>
+   </property>
+   <property name="text">
+    <string>LoadPreviousSettings</string>
+   </property>
+   <property name="toolTip">
+    <string>Load previous settings...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>

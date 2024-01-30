@@ -10,7 +10,8 @@ from ui_wowserTerminal import Ui_wowserTerminal
 from wowserSettings import wowserSettingsDialog # replace SettingsDialog in Sample
 
 # *** From sample
-from PySide6.QtCore import QIODeviceBase, Slot 
+from PySide6.QtCore import QIODeviceBase, Slot, QByteArray
+#QByteArray is here for me to test tx on serial 
 from PySide6.QtWidgets import QLabel, QMainWindow, QMessageBox
 from PySide6.QtSerialPort import QSerialPort
 
@@ -30,6 +31,7 @@ class wowserTerminal(QMainWindow):
     # Signals 
     wowserState = Signal(str)               # Tell main app we are on
     get_data = Signal(bytearray)                            # from Sample
+    output_tB_MW = Signal(str)  # output to main screen text on main app
     
 
     # Methods
@@ -70,11 +72,27 @@ class wowserTerminal(QMainWindow):
         self.m_ui.lineEdit_TerminalUserCommandLine.returnPressed.connect(self.echoTerminalText)
 
         self.m_ui.actionWowSerTerminalWipe.triggered.connect(self.wowserTerminalClear)
+        self.m_ui.actionWowSerDisconnect.triggered.connect(self.close_serial_port)
+        self.m_ui.actionWowSerConnect.triggered.connect(self.open_serial_port)
+        self.m_ui.actionLoadPreviousSettings.triggered.connect(self.loadPreviousSerialSettings)
+
+
+        ### now to make serial port input / output run
+        self.m_serial.readyRead.connect(self.read_data)
+        ### *** prop light does go on so now read text from serial is next ToDo
 
         
 
 
     #Slots
+
+    @Slot()
+    def loadPreviousSerialSettings(self):
+        print("Loading previous serial settings")    
+        self.myWowSerSettingsDialog.m_currentSettings.baud_rate = 2000000
+        self.myWowSerSettingsDialog.m_currentSettings.name = "/dev/tty.usbserial-P6jfn13t"
+
+
     @Slot()
     def wowserTerminalClear(self):
         self.m_ui.textBrowser_TerminalScreen.clear()
@@ -86,6 +104,9 @@ class wowserTerminal(QMainWindow):
         self.m_ui.textBrowser_TerminalScreen.append(self.m_ui.lineEdit_TerminalUserCommandLine.text())
         self.m_ui.lineEdit_TerminalUserCommandLine.clear()
         #### **** you will have to process this text for the PROP before clearing it...
+        texttx = QByteArray("Hi there prop")
+        self.m_serial.write(texttx)     ### test if prop light goes
+        ### *** prop light does go on so now read text from serial is next ToDo
 
     @Slot()
     def wowserRequestReceived(self):   #Note: the pass of "self"
@@ -111,11 +132,14 @@ class wowserTerminal(QMainWindow):
         print(str(self.myWowSerSettingsDialog.m_currentSettings))
         self.m_ui.textBrowser_TerminalScreen.append("Settings for the serial connection changed.")
         self.m_ui.textBrowser_TerminalScreen.append(description(self.myWowSerSettingsDialog.m_currentSettings))
+        self.output_tB_MW.emit("Hi there.")
+        #self.output_tB_MW.emit(str(self.myWowSerSettingsDialog.m_currentSettings))
+        self.output_tB_MW.emit(description(self.myWowSerSettingsDialog.m_currentSettings))
 
     ### *** Here are some Slots from the "Console" in Sample to WowSerTerminal
     ### *** to convert resources, change "self" to self.???
         
-    @Slot(bytearray)        # Note: no ":" ?????
+    @Slot(bytearray)       
     def put_data(self, data):
         self.insertPlainText(data.decode("utf8"))
         bar = self.verticalScrollBar()
@@ -123,13 +147,14 @@ class wowserTerminal(QMainWindow):
 
     def set_local_echo_enabled(self, e):
         self.m_localEchoEnabled = e
-
+    """
     def keyPressEvent(self, e):
         key = e.key()
         if key not in UNHANDLED_KEYS:
             if self.m_localEchoEnabled:
                 super().keyPressEvent(e)
             self.get_data.emit(e.text().encode())
+    """          
 
     def mousePressEvent(self, e):
         self.setFocus()
@@ -143,7 +168,9 @@ class wowserTerminal(QMainWindow):
 ### *** Here are the Slots from Sample in its mainwindow
     @Slot()
     def open_serial_port(self):
-        s = self.m_settings.settings()
+        ###s = self.m_settings.settings()
+        print("Open serial port signal run")
+        s = self.myWowSerSettingsDialog.m_currentSettings
         self.m_serial.setPortName(s.name)
         self.m_serial.setBaudRate(s.baud_rate)
         self.m_serial.setDataBits(s.data_bits)
@@ -155,21 +182,27 @@ class wowserTerminal(QMainWindow):
             ### self.m_console.set_local_echo_enabled(s.local_echo_enabled)
             self.m_ui.actionConnect.setEnabled(False)
             self.m_ui.actionDisconnect.setEnabled(True)
-            self.m_ui.actionConfigure.setEnabled(False)
+###            self.m_ui.actionConfigure.setEnabled(False)  # needs fix
             self.show_status_message(description(s))
+            ### emit to mainwindow
+            self.output_tB_MW.emit("Serial port opened.")
+            print("Serial port opened")
         else:
             QMessageBox.critical(self, "Error", self.m_serial.errorString())
             self.show_status_message("Open error")
 
     @Slot()
     def close_serial_port(self):
+        print("Close serial port signal run")
         if self.m_serial.isOpen():
             self.m_serial.close()
         ### self.m_console.setEnabled(False)
         self.m_ui.actionConnect.setEnabled(True)
         self.m_ui.actionDisconnect.setEnabled(False)
-        self.m_ui.actionConfigure.setEnabled(True)
+###        self.m_ui.actionConfigure.setEnabled(True)   # needs fix
         self.show_status_message("Disconnected")
+        ### emit to mainwindow
+        self.output_tB_MW.emit("Serial port closed.")
 
     @Slot()
     def about(self):
@@ -181,8 +214,18 @@ class wowserTerminal(QMainWindow):
 
     @Slot()
     def read_data(self):
-        data = self.m_serial.readAll()
+        #data = self.m_serial.readAll()  #works !!!
+        data = QByteArray(self.m_serial.readAll())  #works !!!
+
+        print("The read_data was called.")
         ### self.m_console.put_data(data.data())
+        #self.m_ui.textBrowser_TerminalScreen.put_data(data.data())  ### still has to tested.
+        #self.m_ui.textBrowser_TerminalScreen.append(data.decode("utf8"))
+        #self.m_ui.textBrowser_TerminalScreen.append(data.data())
+
+        #####iself.m_ui.textBrowser_TerminalScreen.append(str(data, 'utf-8')) #works!!
+        #####self.m_ui.textBrowser_TerminalScreen.append(data.toStdString()) #works!!!
+        self.m_ui.textBrowser_TerminalScreen.insertPlainText(str(data, 'utf-8'))  #works!!!
 
     @Slot(QSerialPort.SerialPortError)
     def handle_error(self, error):

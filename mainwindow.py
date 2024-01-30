@@ -43,15 +43,25 @@ class TwinDeviceMainWindow(QMainWindow):
         self.myDialogSecondWindow = DialogSecondWindow()  # Note the lack of ".ui"
         #self.wowserRequest.connect(self.wowserRequestInTheAir)
 
+        ### test to see if anything can connect:
+        self.ui.textBrowser_MainWindow.setText("Hiya")
+
+
         self.myWowserTerminal = wowserTerminal()
         self.myWowserTerminal.show()
         self.myWowserTerminal.hide()
         self.myWowserTerminal.raise_()
         self.myWowserTerminal.activateWindow()
+
+
+        # Connections ---------------------------------------------------------
         
         self.wowserRequest.connect(self.myWowserTerminal.wowserRequestReceived)
         self.myWowserTerminal.wowserState.connect(self.wowserStateChanged)
         self.myWowserTerminal.m_ui.pushButton_Done.clicked.connect(self.wowserTerminalExited)
+        # now Anything can emit a message to put out in MainWindow's textBrowser !!!
+        # connection here made below
+        self.myWowserTerminal.output_tB_MW.connect(self.output_textBrowser_MainWindow)
 
         self.ui.actionReport.triggered.connect(self.serialReportConfigure)
         self.ui.actionDisconnect.triggered.connect(self.announceEventHappened)
@@ -92,3 +102,11 @@ class TwinDeviceMainWindow(QMainWindow):
         print("WowSerTerminal exited")
         self.activateWindow()
         self.raise_()
+
+    @Slot(str)
+    def output_textBrowser_MainWindow(self, sss):
+        print("Printing in Main Window text browser")
+        #self.ui.textBrowser_MainWindow.setPlainText("Yaya")
+        self.ui.textBrowser_MainWindow.append("Serial")
+        self.ui.textBrowser_MainWindow.append(sss)
+

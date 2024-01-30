@@ -151,6 +151,11 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Academy Engraved LET</family>
+     </font>
+    </property>
     <property name="digitCount">
      <number>10</number>
     </property>
@@ -220,7 +225,7 @@
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;State of Driving&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser">
+   <widget class="QTextBrowser" name="textBrowser_MainWindow">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -272,6 +277,18 @@
    <addaction name="menuView"/>
    <addaction name="menuSerial"/>
   </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionReport"/>
+  </widget>
   <action name="actionEdit">
    <property name="text">
     <string>Edit</string>
@@ -318,6 +335,10 @@
    </property>
   </action>
   <action name="actionReport">
+   <property name="icon">
+    <iconset>
+     <normaloff>stuffserial/gears.png</normaloff>stuffserial/gears.png</iconset>
+   </property>
    <property name="text">
     <string>Report</string>
    </property>

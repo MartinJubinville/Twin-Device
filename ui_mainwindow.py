@@ -18,7 +18,8 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QLCDNumber, QLabel, QLineEdit,
     QMainWindow, QMenu, QMenuBar, QProgressBar,
-    QSizePolicy, QStatusBar, QTextBrowser, QWidget)
+    QSizePolicy, QStatusBar, QTextBrowser, QToolBar,
+    QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -45,6 +46,9 @@ class Ui_MainWindow(object):
         self.actionDisconnect.setObjectName(u"actionDisconnect")
         self.actionReport = QAction(MainWindow)
         self.actionReport.setObjectName(u"actionReport")
+        icon = QIcon()
+        icon.addFile(u"stuffserial/gears.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.actionReport.setIcon(icon)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.progressBar = QProgressBar(self.centralwidget)
@@ -82,6 +86,7 @@ class Ui_MainWindow(object):
         self.lcdNumber_CoilBFreq = QLCDNumber(self.centralwidget)
         self.lcdNumber_CoilBFreq.setObjectName(u"lcdNumber_CoilBFreq")
         self.lcdNumber_CoilBFreq.setGeometry(QRect(240, 120, 109, 23))
+        self.lcdNumber_CoilBFreq.setFont(font)
         self.lcdNumber_CoilBFreq.setDigitCount(10)
         self.label_5 = QLabel(self.centralwidget)
         self.label_5.setObjectName(u"label_5")
@@ -100,9 +105,9 @@ class Ui_MainWindow(object):
         self.label_7 = QLabel(self.centralwidget)
         self.label_7.setObjectName(u"label_7")
         self.label_7.setGeometry(QRect(30, 300, 151, 16))
-        self.textBrowser = QTextBrowser(self.centralwidget)
-        self.textBrowser.setObjectName(u"textBrowser")
-        self.textBrowser.setGeometry(QRect(50, 320, 381, 51))
+        self.textBrowser_MainWindow = QTextBrowser(self.centralwidget)
+        self.textBrowser_MainWindow.setObjectName(u"textBrowser_MainWindow")
+        self.textBrowser_MainWindow.setGeometry(QRect(50, 320, 381, 51))
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -117,6 +122,9 @@ class Ui_MainWindow(object):
         self.menuSerial = QMenu(self.menubar)
         self.menuSerial.setObjectName(u"menuSerial")
         MainWindow.setMenuBar(self.menubar)
+        self.toolBar = QToolBar(MainWindow)
+        self.toolBar.setObjectName(u"toolBar")
+        MainWindow.addToolBar(Qt.TopToolBarArea, self.toolBar)
 
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuView.menuAction())
@@ -133,6 +141,7 @@ class Ui_MainWindow(object):
         self.menuSerial.addAction(self.actionDisconnect)
         self.menuSerial.addSeparator()
         self.menuSerial.addAction(self.actionReport)
+        self.toolBar.addAction(self.actionReport)
 
         self.retranslateUi(MainWindow)
 
@@ -170,5 +179,6 @@ class Ui_MainWindow(object):
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuView.setTitle(QCoreApplication.translate("MainWindow", u"View", None))
         self.menuSerial.setTitle(QCoreApplication.translate("MainWindow", u"Serial", None))
+        self.toolBar.setWindowTitle(QCoreApplication.translate("MainWindow", u"toolBar", None))
     # retranslateUi
 
